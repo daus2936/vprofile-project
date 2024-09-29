@@ -1,9 +1,9 @@
-FROM openjdk:8 AS BUILD_IMAGE
+FROM openjdk:11 AS BUILD_IMAGE
 RUN apt update -y && apt install maven -y
 RUN git clone https://github.com/daus2936/vprofile-project.git
 RUN cd vprofile-project && mvn install 
 
-FROM tomcat:8-jre11
+FROM tomcat:9-jre11
 LABEL "Project"="Vprofile"
 LABEL "Author"="daus"
 RUN rm -rf /usr/local/tomcat/webapps/*
