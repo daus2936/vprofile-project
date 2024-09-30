@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vprodb3
+  labels:
+    app: vprodb
+spec:
+  selector:
+    matchLabels:
+      app: vprodb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vprodb
+    spec:
+      containers:
+        - name: vprodb
+          image: vprofile/vprofiledb
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: dbdatas
+          ports:
+            - name: vprodb-port
+              containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: db-pass
+      nodeSelector:
+        zone: us-east-1a
+        #zone: us-east-1a
+      volumes:
+        - name: dbdatas
+          persistentVolumeClaim:
+            claimName: db-claim
+      
+      initContainers:
+        - name: busybox
+          image: busybox:latest
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: vpro-db-data
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              rm -rf /var/lib/mysql/lost+found && \
+              chown -R 999:999 /var/lib/mysql
+          
