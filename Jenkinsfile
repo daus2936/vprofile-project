@@ -15,7 +15,7 @@ pipeline {
 		NEXUS_PASS = '085710576z'
 		RELEASE_REPO = 'vprofile-release'
 		CENTRAL_REPO = 'vpro-maven-central'
-		NEXUSIP = '172.31.40.209'
+		NEXUSIP = '172.31.91.136'
 		NEXUSPORT = '8081'
 		NEXUS_GRP_REPO = 'vpro-maven-group'
         NEXUS_LOGIN = 'nexuslogin'
@@ -115,7 +115,7 @@ pipeline {
                 extraVars   : [
                    	USER: "admin",
                     PASS: "${NEXUSPASS}",
-			        nexusip: "172.31.40.209",
+			        nexusip: "172.31.91.136",
 			        reponame: "vprofile-release",
 			        groupid: "QA",
 			        time: "${env.BUILD_TIMESTAMP}",
