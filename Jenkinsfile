@@ -68,6 +68,9 @@ pipeline {
 
         
         stage("UploadArtifact"){
+            options {
+              timeout(time: 1, unit: 'HOURS')   // timeout on this stage
+            }
             steps{
                 nexusArtifactUploader(
                   nexusVersion: 'nexus3',
